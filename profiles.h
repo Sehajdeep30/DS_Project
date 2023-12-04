@@ -1,12 +1,18 @@
 #ifndef PROFILES_H
 #define PROFILES_H
 
+// Define the profile structure
+typedef struct profile {
+    char* username;
+    int* scores;
+    int highestScore;
+    struct profile* next;
+} Profile;
 
-struct Profile* createProfile(const char* username, int numScores);
-void writeProfileToFile(struct Profile* profile, const char* filename);
-struct Profile* readProfilesFromFile(const char* filename);
-void freeProfileList(struct Profile* head);
-void updateProfile(struct Profile* profile, double elapsed_time);
-
+Profile* createProfile(const char* username, int numScores);
+void writeProfileToFile(Profile* profile, const char* filename);
+Profile* readProfilesFromFile(const char* filename);
+void freeProfileList(Profile* head);
+void updateProfile(Profile* profile, double elapsed_time);
 
 #endif /*PROFILES_H*/
