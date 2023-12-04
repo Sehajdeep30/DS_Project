@@ -7,5 +7,10 @@
 #include "sudokuStore.h"
 #include "profile.h"
 #include "sudokuSolver.h"
-#define COLOR_RESET "\x1b[0m"
-#define COLOR_GREEN "\x1b[32m"
+
+// Function declarations
+void removeChar(char *str, char target);
+char *newString(int cursor, char *str);
+void sudokuFill(int sudoku[9][9]);
+
+

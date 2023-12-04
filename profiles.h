@@ -1,3 +1,4 @@
+#include "headers.h"
 
 // Define the profile structure
 struct Profile {
@@ -53,7 +54,6 @@ void writeProfileToFile(struct Profile* profile, const char* filename) {
     fclose(file);
 }
 
-
 // Function to read profiles from a file and create a linked list
 struct Profile* readProfilesFromFile(const char* filename) {
     FILE* file = fopen(filename, "rb");
@@ -101,6 +101,8 @@ void freeProfileList(struct Profile* head) {
         free(temp);
     }
 }
+
+// Function to update a profile with the current score
 void updateProfile(struct Profile* profile, double elapsed_time) {
     double score = fabs(elapsed_time - 600);
 
@@ -115,9 +117,8 @@ void updateProfile(struct Profile* profile, double elapsed_time) {
         profile->highestScore = score;
     }
 
-    profile -> next = NULL;
+    profile->next = NULL;
 
     // Write the UserProfile structure to a file
-    writeProfileToFile(profile,"profiles.dat");
+    writeProfileToFile(profile, "profiles.dat");
 }
-

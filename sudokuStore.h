@@ -1,14 +1,3 @@
-/*
-void printSub(char pattern[],int target_index,int number){
-    for(int i = 0;i<strlen(pattern);i++){
-        if(i == target_index){
-            printf("%d",number);
-            continue;
-        }
-        printf("%c",pattern[i]);
-    }
-}
-*/
 
 char pattern[] =
 "+---+---+---+---+---+---+---+---+---+ \n\
