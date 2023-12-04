@@ -1,30 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
-#include <time.h>
-#include <math.h>
 #include "sudokuStore.h"
 #include "profile.h"
 #include "sudokuSolver.h"
 
-// Function declarations
-void removeChar(char *str, char target);
-char *newString(int cursor, char *str);
-void sudokuFill(int sudoku[9][9]);
-
-struct Profile* createProfile(const char* username, int numScores);
-void writeProfileToFile(struct Profile* profile, const char* filename);
-struct Profile* readProfilesFromFile(const char* filename);
-void freeProfileList(struct Profile* head);
-void updateProfile(struct Profile* profile, double elapsed_time);
-
-struct Profile {
-    int username;
-    int* scores;
-    int highestScore;
-    struct Profile* next;
-};
 
 void displayProfiles(struct Profile* profiles) {
     if (!profiles) {
@@ -74,7 +52,10 @@ int main() {
             case 1:
                 {
                     int sudoku[9][9];  // Placeholder for Sudoku puzzle
-                    sudokuFill(sudoku);
+                    double elapsed_time = sudokuFill(sudoku);
+                    const char* filename = "profiles.dat";  // Change the filename as needed
+                    struct Profile* profiles = readProfilesFromFile(filename);
+                    updateProfile(profiles,elapsed_time);
                 }
                 break;
             case 2:
