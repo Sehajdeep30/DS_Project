@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include "sudokuStore.h"
 #include "profiles.h"
 #include "sudokuSolver.h"
-
 
 void displayProfiles(Profile* profiles) {
     if (!profiles) {
