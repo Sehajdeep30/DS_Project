@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <conio.h>
+#include <caca_conio.h>
 #include <time.h>
 #include <math.h>
+
 #include "sudokuSolver.h"
 #include "sudokuStore.h"
-
 
 void removeChar(char *str, char target) {
     char *ptr = strchr(str, target);
@@ -15,7 +16,7 @@ void removeChar(char *str, char target) {
 }
 
 char *newString(int cursor, char *str) {
-    removeChar(str, 'X');
+    removeChar(str, 'X'); // TODO
 
     char *new_string = (char *)malloc(strlen(str) + 3); // +3 for two spaces and null terminator
     strcpy(new_string, "");
@@ -62,14 +63,14 @@ double sudokuFill(int sudoku[9][9]) {
         printf("%s", str);
         printf("\nPress x to Quit Game\n");
 
-        key = _getch();
+        key = getch();
 
         if (key == 'x' || key == 'X') {
             break;
         }
 
         if (key == 224) {
-            key = _getch(); // Read the extended key code
+            key = getch(); // Read the extended key code
 
             switch (key) {
             case 72:

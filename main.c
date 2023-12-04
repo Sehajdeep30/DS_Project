@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include "sudokuStore.h"
-#include "profile.h"
+#include "profiles.h"
 #include "sudokuSolver.h"
 
 
-void displayProfiles(struct Profile* profiles) {
+void displayProfiles(Profile* profiles) {
     if (!profiles) {
         printf("No profiles available.\n");
         return;
     }
 
-    int username;
+    char *username;
     printf("Enter profile number (username): ");
-    scanf("%d", &username);
+    scanf("%s", username);
     
 
     // Search for the profile with the specified username
-    struct Profile* selectedProfile = NULL;
+    Profile* selectedProfile = NULL;
     while (profiles != NULL && profiles->username != username) {
         if (profiles->next == NULL) {
-            printf("Profile with username %d not found.\n", username);
+            printf("Profile with username %s not found.\n", username);
             return;
         }
         profiles = profiles->next;
@@ -27,8 +27,8 @@ void displayProfiles(struct Profile* profiles) {
 
     // Display the selected profile
     printf("\nProfile Information:\n");
-    printf("Username: %d\n", selectedProfile->username);
-    printf("Highest Score: %.2f\n", selectedProfile->highestScore);
+    printf("Username: %s\n", selectedProfile->username);
+    printf("Highest Score: %d\n", selectedProfile->highestScore);
 
     // Add other profile data display as needed
 }
@@ -54,14 +54,14 @@ int main() {
                     int sudoku[9][9];  // Placeholder for Sudoku puzzle
                     double elapsed_time = sudokuFill(sudoku);
                     const char* filename = "profiles.dat";  // Change the filename as needed
-                    struct Profile* profiles = readProfilesFromFile(filename);
+                    Profile* profiles = readProfilesFromFile(filename);
                     updateProfile(profiles,elapsed_time);
                 }
                 break;
             case 2:
                 {
                     const char* filename = "profiles.dat";  // Change the filename as needed
-                    struct Profile* profiles = readProfilesFromFile(filename);
+                    Profile* profiles = readProfilesFromFile(filename);
                     displayProfiles(profiles);
                     freeProfileList(profiles);  // Free memory allocated for the linked list
                 }
