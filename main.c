@@ -1,5 +1,30 @@
-#include "headers.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+#include <time.h>
+#include <math.h>
+#include "sudokuStore.h"
 #include "profile.h"
+#include "sudokuSolver.h"
+
+// Function declarations
+void removeChar(char *str, char target);
+char *newString(int cursor, char *str);
+void sudokuFill(int sudoku[9][9]);
+
+struct Profile* createProfile(const char* username, int numScores);
+void writeProfileToFile(struct Profile* profile, const char* filename);
+struct Profile* readProfilesFromFile(const char* filename);
+void freeProfileList(struct Profile* head);
+void updateProfile(struct Profile* profile, double elapsed_time);
+
+struct Profile {
+    int username;
+    int* scores;
+    int highestScore;
+    struct Profile* next;
+};
 
 void displayProfiles(struct Profile* profiles) {
     if (!profiles) {
@@ -10,10 +35,11 @@ void displayProfiles(struct Profile* profiles) {
     int username;
     printf("Enter profile number (username): ");
     scanf("%d", &username);
+    
 
     // Search for the profile with the specified username
     struct Profile* selectedProfile = NULL;
-    while (profiles != NULL && *(profiles->username) != username) {
+    while (profiles != NULL && profiles->username != username) {
         if (profiles->next == NULL) {
             printf("Profile with username %d not found.\n", username);
             return;
