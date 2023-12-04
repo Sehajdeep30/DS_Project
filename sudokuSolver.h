@@ -1,5 +1,3 @@
-#include "headers.h"
-
 void removeChar(char *str, char target) {
     char *ptr = strchr(str, target);
     if (ptr != NULL) {

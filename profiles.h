@@ -1,26 +1,18 @@
-#include "headers.h"
-
 // Define the profile structure
-struct Profile {
-    int* scores;
-    int highestScore;
-    char* username;
-    struct Profile* next;
-};
 
 // Function to create a new profile
 struct Profile* createProfile(const char* username, int numScores) {
     struct Profile* profile = (struct Profile*)malloc(sizeof(struct Profile));
     if (!profile) {
         perror("Error creating profile");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     // Allocate memory for scores
     profile->scores = (int*)malloc(numScores * sizeof(int));
     if (!profile->scores) {
         perror("Error allocating memory for scores");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     // Initialize scores to 0
@@ -41,7 +33,7 @@ struct Profile* createProfile(const char* username, int numScores) {
 }
 
 // Function to write a profile to a file
-void writeProfileToFile(struct Profile* profile, const char* filename) {
+void writeProfileToFile(struct Profile* profile, const char* filename)
     FILE* file = fopen(filename, "wb");
     if (!file) {
         perror("Error opening file for writing");
