@@ -1,18 +1,4 @@
-// Function declaration
-
-/*
-void display(int str_index, int block_index) {
-    int arr_x = block_index / 9, arr_y = block_index % 9, number = sudoku1[arr_x][arr_y];
-
-    for (int i = 0; i < strlen(pattern); i++) {
-        if (i == str_index && number != 0) {
-            printf("%d", number);
-            continue;
-        }
-        printf("%c", pattern[i]);
-    }
-}
-*/
+#include "headers.h"
 
 void removeChar(char *str, char target) {
     char *ptr = strchr(str, target);
@@ -21,11 +7,12 @@ void removeChar(char *str, char target) {
     }
 }
 
-char* newString(int cursor, char* str) {
+char *newString(int cursor, char *str) {
     removeChar(str, 'X');
 
-    char* new_string = (char*)malloc(strlen(str) + 1); // +1 for null terminator
+    char *new_string = (char *)malloc(strlen(str) + 3); // +3 for two spaces and null terminator
     strcpy(new_string, "");
+
     int arr_x = cursor / 9;
     int arr_y = cursor % 9;
     char number_char;
@@ -54,7 +41,6 @@ char* newString(int cursor, char* str) {
 
     return new_string;
 }
-
 
 void sudokuFill(int sudoku[9][9]) {
     clock_t start_time = clock();
@@ -120,5 +106,5 @@ void sudokuFill(int sudoku[9][9]) {
     }
     clock_t end_time = clock();
     double elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000;
-    double score = fabs(elapsed_time-600);
+    double score = fabs(elapsed_time - 600);
 }

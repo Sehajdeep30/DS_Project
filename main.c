@@ -1,11 +1,5 @@
 #include "headers.h"
-
-struct Profile {
-    int* scores;
-    int highestScore;
-    char* username;
-    struct Profile* next;
-};
+#include "profile.h"
 
 void displayProfiles(struct Profile* profiles) {
     if (!profiles) {
@@ -19,18 +13,19 @@ void displayProfiles(struct Profile* profiles) {
 
     // Search for the profile with the specified username
     struct Profile* selectedProfile = NULL;
-    while (*(profiles->username) != username) {
-        if (profiles->username == 0) {
+    while (profiles != NULL && *(profiles->username) != username) {
+        if (profiles->next == NULL) {
             printf("Profile with username %d not found.\n", username);
             return;
         }
-        profiles++;
+        profiles = profiles->next;
     }
 
     // Display the selected profile
     printf("\nProfile Information:\n");
     printf("Username: %d\n", selectedProfile->username);
-    printf("Score: %.2f\n", selectedProfile->scores);
+    printf("Highest Score: %.2f\n", selectedProfile->highestScore);
+
     // Add other profile data display as needed
 }
 
@@ -59,8 +54,9 @@ int main() {
             case 2:
                 {
                     const char* filename = "profiles.dat";  // Change the filename as needed
-                    struct Profile* profiles = readProfilesFromFile("profiles.dat");
+                    struct Profile* profiles = readProfilesFromFile(filename);
                     displayProfiles(profiles);
+                    freeProfileList(profiles);  // Free memory allocated for the linked list
                 }
                 break;
             case 3:
