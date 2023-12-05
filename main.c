@@ -27,6 +27,8 @@ void displayProfiles(Profile* profiles) {
     printf("\nProfile Information:\n");
     printf("Username: %s\n", selectedProfile->username);
     printf("Highest Score: %d\n", selectedProfile->highestScore);
+    printf("\nPast 5 scores: %d,%d,%d,%d,%d",selectedProfile->scores[0],selectedProfile->scores[1],
+    selectedProfile->scores[0],selectedProfile->scores[0],selectedProfile->scores[0]);
 
     // Add other profile data display as needed
 }
@@ -39,8 +41,9 @@ int main() {
         printf("\nMenu:\n");
         printf("1. Solve Sudoku\n");
         printf("2. View Profiles\n");
-        printf("3. Exit\n");
-        printf("Enter your choice (1-3): ");
+        printf("3.Create Profile\n");
+        printf("4. Exit\n");
+        printf("Enter your choice (1-4): ");
 
         // Get user choice
         scanf("%d", &choice);
@@ -50,7 +53,7 @@ int main() {
             case 1:
                 {
                     int sudoku[9][9];  // Placeholder for Sudoku puzzle
-                    double elapsed_time = sudokuFill(sudoku);
+                    double score = sudokuFill(sudoku);
                     const char* filename = "profiles.dat";  // Change the filename as needed
                     Profile* profiles = readProfilesFromFile(filename);
                     updateProfile(profiles,elapsed_time);
@@ -64,7 +67,10 @@ int main() {
                     freeProfileList(profiles);  // Free memory allocated for the linked list
                 }
                 break;
+
             case 3:
+                createProfile();
+            case 4:
                 printf("Exiting program. Goodbye!\n");
                 break;
             default:

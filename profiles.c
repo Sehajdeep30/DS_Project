@@ -7,7 +7,11 @@
 #include "profiles.h"
 
 // Function to create a new profile
-Profile* createProfile(const char* username, int numScores) {
+Profile* createProfile() {
+    char * username = (char)malloc(25);
+    strcat(username,"");
+    printf("Enter the u sername: ");
+    scanf("%s",username);
     Profile* profile = (Profile*)malloc(sizeof(Profile));
     if (!profile) {
         perror("Error creating profile");
@@ -34,7 +38,7 @@ Profile* createProfile(const char* username, int numScores) {
         perror("Error allocating memory for username");
         exit(EXIT_FAILURE);
     }
-
+    printf("Profile generated.")
     return profile;
 }
 

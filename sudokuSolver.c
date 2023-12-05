@@ -7,8 +7,6 @@
 
 #include "sudokuSolver.h"
 
-int indexor[9][9];
-int sudoku[9][9];
 
 char pattern[] =
 "+---+---+---+---+---+---+---+---+---+ \n\
@@ -31,6 +29,9 @@ char pattern[] =
 |   |   |   |   |   |   |   |   |   | \n\
 +---+---+---+---+---+---+---+---+---+ ";
 
+int indexor[9][9];
+int sudoku[9][9];
+
 void sudokuChoose() {
     int sudoku1[9][9] = {
         {8, 0, 0, 2, 6, 0, 0, 0, 4},
@@ -51,21 +52,47 @@ void sudokuChoose() {
     }
 }
 
+#include <stdio.h>
 
-    /*const char* substring = "   ";
-    int count = 0;
-
-    char* ptr = pattern;
-    while ((ptr = strstr(ptr, substring)) != NULL) {
-        count++;
-        ptr += strlen(substring);
+// Function to check if a number can be placed at a specific position in the Sudoku grid
+int isSafe(int sudoku[9][9], int row, int col, int num) {
+    // Check if the number is not present in the same row and column
+    for (int x = 0; x < 9; x++) {
+        if (sudoku[row][x] == num || sudoku[x][col] == num) {
+            return 0; // Not safe
+        }
     }
-    int i = 0;
 
+    // Check if the number is not present in the 3x3 subgrid
+    int startRow = row - row % 3;
+    int startCol = col - col % 3;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (sudoku[i + startRow][j + startCol] == num) {
+                return 0; // Not safe
+            }
+        }
+    }
 
-    printf("Number of occurrences of \"%s\": %d\n", substring, count);
-*/
+    return 1; // Safe
+}
 
+// Function to check if the Sudoku grid is valid
+int isSudokuValid(int sudoku[9][9]) {
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            // Check if the current cell is not empty
+            if (sudoku[row][col] != 0) {
+                // Check if the current number can be placed in the current cell
+                if (!isSafe(sudoku, row, col, sudoku[row][col])) {
+                    return 0; // Not valid
+                }
+            }
+        }
+    }
+    printf("Sudoku is valid :)");
+    return 1; // Valid
+}
 
 char* returnSub(int start_index, int end_index,char * pattern) {
     char* sub_string = (char*)malloc(end_index - start_index + 1); // +1 for null terminator
@@ -78,21 +105,21 @@ char* returnSub(int start_index, int end_index,char * pattern) {
 char* sudokuString(int sudoku[9][9]) {
     const char* substring = "   ";
     const char* ptr = pattern;
-    char* sudoku_string = (char*)malloc(strlen(pattern) + 1); // +1 for null terminator
+    char* sudoku_string = (char*)calloc(1,strlen(pattern) + 1); // +1 for null terminator
     strcpy(sudoku_string, "");
 
     int i = 0, start_index = 0, end_index = 0, arr_x = 0, arr_y = 0;
 
     while ((ptr = strstr(ptr, substring)) != NULL) {
+
         end_index = ptr - pattern;
         indexor[arr_x][arr_y] = end_index;
         strcat(sudoku_string, returnSub(start_index, end_index,pattern));
-
-        
+                
         if(sudoku[arr_x][arr_y] != 0){
             
             char number_char = (char)(sudoku[arr_x][arr_y] + '0');
-            strncat(sudoku_string, &number_char, 1);
+            strncat(sudoku_string,&number_char, 1);
         }
 
         else{
@@ -157,21 +184,21 @@ double sudokuFill(int sudoku[9][9]) {
     char *str = sudokuString(sudoku);
     int cursor = 1, key = 0, arr_x = 0, arr_y = 0;
 
-    while (1) {
+    while (isSudokuValid(sudoku) != 1) {
         system("cls"); // Clear the console screen
 
         printf("\nUSE THE ARROW KEYS TO MOVE:\n");
         printf("%s", str);
         printf("\nPress x to Quit Game\n");
 
-        key = getch();
+        key = _getch();
 
         if (key == 'x' || key == 'X') {
             break;
         }
 
         if (key == 224) {
-            key = getch(); // Read the extended key code
+            key = _getch(); // Read the extended key code
 
             switch (key) {
             case 72:
@@ -215,5 +242,7 @@ double sudokuFill(int sudoku[9][9]) {
     }
     clock_t end_time = clock();
     double elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000;
-    return elapsed_time;
+    double score = (elapsed_time/600)*100;
+    printf("score is %lf", score);
+    return score;
 }
